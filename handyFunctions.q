@@ -48,3 +48,17 @@ confirmFunc:{[f]
 //Helper for above, asks for input
 confirm:{1 x;read0 0}
 
+
+//Data sizes in human readible format
+byteUnits:("bytes";"KB";"MB";"GB";"TB");
+byteSizes:xexp[1024;]til 5;
+
+//@Desc                 Puts memory usage in human readible form
+//
+//@Input sz{float}      Result of -22! for example   
+//
+//@Return  {string}     Human readible format
+fmtBytes:{[sz]
+	i:last where byteSizes<abs sz;
+	(-27!(2i;sz%byteSizes i))," ",byteUnits i
+	};
