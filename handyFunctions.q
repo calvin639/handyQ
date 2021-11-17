@@ -62,3 +62,27 @@ fmtBytes:{[sz]
 	i:last where byteSizes<abs sz;
 	(-27!(2i;sz%byteSizes i))," ",byteUnits i
 	};
+
+//@Desc                 Rough decider on if you should use sym/string in terms of memory only
+//
+//@Input n{long}	Number of occurances of the string
+//@Input str{string}	The string of interest
+//
+//@Return  {sym}	String or Sym
+symOrString:{[n;str]
+    if[1>=count str;:`string];
+    memStr:n*-22!str;
+    memSym:sum(-22!str;n*-22!0nj);
+    `sym`string[memStr<memSym]
+    };
+
+//@Desc                 Rough decider on if you should use sym/string for column in terms of memory only
+//
+//@Input col{list}      Column of interest
+//
+//@Return  {sym}        String or Sym
+symOrStringCol:{[col]
+    d:count each group col;
+    d:count each group symOrString'[value d;key d];
+    first key desc d
+    }
