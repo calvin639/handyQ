@@ -86,3 +86,19 @@ symOrStringCol:{[col]
     d:count each group symOrString'[value d;key d];
     first key desc d
     }
+
+//@Desc                 Pivots a table on a set of columns
+//
+//@Input t{tbl}      	Your table
+//@Input k{sym}		Column to pivot on
+//@Input c{sym}         New columns in pivoted table
+//@Input v{sym}         Value column to retain
+//
+//@Return  {tbl}        Pivotted table
+//
+pivot:{[t;k;c;v]
+    P:asc distinct t[c];
+    pv:?[t;();enlist[k]!enlist k;enlist[v]!enlist(!;c;v)];
+    pv:(value pv)v;
+    flip P!flip {x each y}[;P]each pv
+    };		
